@@ -1,0 +1,15 @@
+{% extends 'faceid_app/base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Вход</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+    <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь</a>.</p>
+</div>
+{% endblock %}

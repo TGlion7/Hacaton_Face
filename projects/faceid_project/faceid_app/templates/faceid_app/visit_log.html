@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Журнал посещений</title>
+</head>
+<body>
+    <h1>Журнал посещений</h1>
+    <table border="1">
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Время посещения</th>
+        </tr>
+        {% for visit in visits %}
+        <tr>
+            <td>{{ visit.user.username }}</td>
+            <td>{{ visit.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

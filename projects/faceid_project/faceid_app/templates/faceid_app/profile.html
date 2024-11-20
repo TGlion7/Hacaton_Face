@@ -1,0 +1,48 @@
+{% extends 'faceid_app/base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <header class="bg-info text-white py-3 mb-4">
+        <div class="container d-flex justify-content-between">
+            {% if user.is_superuser %}
+                <a href="{% url 'check_face' %}" class="btn btn-info">Face ID</a>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'logout' %}" class="d-flex">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link text-white">Выйти</button>
+                </form>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="form-container">
+        <h2 class="mb-4">Профиль</h2>
+        <p><strong>Имя:</strong> {{ user.first_name }}</p>
+        <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+        <p><strong>Уровень спорта:</strong> {{ user.level }}</p>
+        <p><strong>Клуб:</strong> {{ user.club }}</p>
+        <p><strong>Тренер:</strong> {{ user.coach }}</p>
+
+        <div class="mb-3">
+            <label for="profile_picture" class="form-label">Фотография</label>
+            {% if user.profile_picture %}
+                <img src="{{ user.profile_picture.url }}" alt="Profile Picture" class="img-fluid" style="max-width: 200px;">
+            {% else %}
+                <p>Фотография не загружена.</p>
+            {% endif %}
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="profile_picture" class="form-label">Загрузите фотографию</label>
+                <input type="file" name="profile_picture" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Загрузить фотографию</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
